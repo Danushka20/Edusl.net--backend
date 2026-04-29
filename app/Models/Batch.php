@@ -9,7 +9,13 @@ class Batch extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'course_name'];
+    protected $fillable = [
+        'name',
+        'description',
+        'course_name',
+        'start_date',
+        'end_date',
+    ];
 
     public function students()
     {

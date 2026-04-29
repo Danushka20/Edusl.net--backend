@@ -12,5 +12,3 @@ Route::get('/', function () {
 Route::resource('batches', BatchController::class);
 Route::resource('students', StudentController::class);
 Route::resource('documents', DocumentController::class);
-
-require __DIR__.'/api.php';

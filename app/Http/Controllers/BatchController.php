@@ -14,12 +14,15 @@ class BatchController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'name' => 'required|string',
-            'course_name' => 'required|string',
+            'description' => 'nullable|string',
+            'course_name' => 'nullable|string',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
         ]);
 
-        return Batch::create($request->all());
+        return Batch::create($data);
     }
 
     public function show(Batch $batch)
@@ -29,13 +32,21 @@ class BatchController extends Controller
 
     public function update(Request $request, Batch $batch)
     {
-        $request->validate([
+        $data = $request->validate([
             'name' => 'required|string',
-            'course_name' => 'required|string',
+            'description' => 'nullable|string',
+            'course_name' => 'nullable|string',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
         ]);
 
-        $batch->update($request->all());
+        $batch->update($data);
         return $batch;
+    }
+
+    public function students(Batch $batch)
+    {
+        return $batch->students()->with(['files', 'certificates'])->get();
     }
 
     public function destroy(Batch $batch)
